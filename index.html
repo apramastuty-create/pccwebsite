@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PCC – Pondok Kelapa Cycling Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#0aa6e8;--leaf:#2f9e3f;--sun:#f6e72a;--road:#20242a;--flag:#d8262c;--paper:#f4faff;--ink:#16202a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:17px/1.6 "Hanken Grotesk",system-ui,sans-serif;background:var(--paper);color:var(--ink)}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.05;margin:0}
+img{max-width:100%;display:block}
+nav{position:sticky;top:0;z-index:9;background:var(--road);color:#fff;display:flex;gap:18px;align-items:center;padding:10px 20px;overflow-x:auto;white-space:nowrap}
+nav b{font:800 20px "Bricolage Grotesque";color:var(--sun)}nav a{color:#fff;text-decoration:none;font-weight:600}
+#road{position:sticky;top:46px;z-index:8;height:22px;background:var(--road);border-top:2px dashed #fff8;}
+#bike{position:absolute;top:-6px;left:0;font-size:20px;transition:left .1s;transform:scaleX(-1)}
+.hero{background:linear-gradient(180deg,var(--sky),#9fe3ff 55%,var(--sun));padding:64px 20px 0;text-align:center;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(40px,9vw,96px);font-weight:800;color:var(--road)}
+.hero p{max-width:620px;margin:16px auto;font-size:19px}
+.badge{display:inline-block;background:var(--flag);color:#fff;font:800 22px "Bricolage Grotesque";padding:6px 18px;border-radius:40px;transform:rotate(-3deg);margin-bottom:14px}
+.hills{display:block;width:100%;height:120px;margin-top:20px}
+.btn{display:inline-block;background:var(--road);color:#fff;padding:12px 24px;border-radius:40px;text-decoration:none;font-weight:600;border:0;font-size:16px;cursor:pointer}
+.btn.y{background:var(--sun);color:var(--road)}
+section{padding:64px 20px;max-width:1100px;margin:auto}
+h2{font-size:clamp(30px,5vw,52px);font-weight:800;margin-bottom:20px}
+#trip{max-width:none;background:var(--road);color:#fff;background-image:repeating-linear-gradient(90deg,#fff3 0 40px,transparent 40px 80px);background-size:100% 3px;background-repeat:no-repeat;background-position:0 28px}
+#trip>div{max-width:1100px;margin:auto}
+.tg{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.tg img{border-radius:6px;border:6px solid #fff;transform:rotate(2deg)}
+.cd{display:flex;gap:12px;margin:18px 0}.cd div{background:var(--sun);color:var(--road);border-radius:10px;padding:8px 14px;text-align:center;font:800 30px "Bricolage Grotesque"}.cd small{display:block;font:600 12px "Hanken Grotesk"}
+#trip ul{padding-left:20px}
+.news{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
+.post{background:#fff;border-radius:4px;border-left:6px solid var(--leaf);overflow:hidden;box-shadow:0 2px 0 #0002}
+.post img{width:100%;aspect-ratio:4/3;object-fit:cover}.post div{padding:14px 16px}.post small{color:#567}
+.gal{columns:3 220px;gap:12px}.gal figure{margin:0 0 12px;break-inside:avoid;position:relative}.gal img{width:100%;border-radius:4px}
+.gal figcaption{position:absolute;left:0;bottom:0;right:0;background:linear-gradient(transparent,#000a);color:#fff;padding:20px 10px 8px;font-size:14px;border-radius:0 0 4px 4px}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:10px}.stats b{font:800 44px "Bricolage Grotesque";color:var(--leaf);display:block;line-height:1}
+footer{background:var(--leaf);color:#fff;text-align:center;padding:30px 20px}
+#adm{display:none;background:#fff8c4;border-bottom:4px solid var(--road);padding:20px}
+#adm .in{max-width:1100px;margin:auto;display:grid;gap:10px}
+#adm input,#adm textarea{width:100%;padding:10px;font:inherit;border:2px solid var(--road);border-radius:6px}
+#adm .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.del{background:var(--flag);color:#fff;border:0;border-radius:4px;padding:2px 8px;cursor:pointer;margin:6px 16px}
+#msg{font-weight:600}
+@media(max-width:760px){.tg,#adm .row{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#bike{transition:none}}
+</style></head><body>
+<div id="adm"><div class="in">
+<h3>Mode Admin – edit konten PCC</h3>
+<div class="row"><input id="e_date" placeholder="Tanggal berangkat (YYYY-MM-DD)"><input id="e_ttl" placeholder="Judul trip"></div>
+<textarea id="e_desc" rows="3" placeholder="Deskripsi trip"></textarea>
+<textarea id="e_items" rows="4" placeholder="Rencana/rute (satu baris satu poin)"></textarea>
+<h3>Tambah kabar baru</h3>
+<input id="n_t" placeholder="Judul kabar"><textarea id="n_x" rows="3" placeholder="Isi kabar"></textarea>
+<input id="n_i" type="file" accept="image/*"><small>Foto opsional (otomatis dikecilkan). Foto galeri: isi keterangan lalu pilih foto di bawah.</small>
+<input id="g_c" placeholder="Keterangan foto galeri"><input id="g_i" type="file" accept="image/*">
+<div><button class="btn" id="save">Simpan & terbitkan</button> <span id="msg"></span></div>
+</div></div>
+<nav><b>PCC</b><a href="#trip">Ujung Genteng</a><a href="#news">Kabar</a><a href="#gal">Galeri</a><a href="#about">Tentang</a></nav>
+<div id="road"><span id="bike">🚲</span></div>
+<header class="hero">
+<span class="badge">20 Tahun Gowes Bareng!</span>
+<h1>Pondok Kelapa<br>Cycling Community</h1>
+<p>Dua dekade mengayuh bersama dari Pondok Kelapa. Besok kita rayakan di ujung selatan Jawa.</p>
+<a class="btn" href="#trip">Lihat trip Ujung Genteng</a> <a class="btn y" href="#gal">Galeri</a>
+<svg class="hills" viewBox="0 0 800 120" preserveAspectRatio="none"><path d="M0 120V70Q100 20 200 60T400 50T600 40T800 60V120Z" fill="#2f9e3f"/><path d="M0 120V95Q150 60 300 90T600 80T800 95V120Z" fill="#20242a"/></svg>
+</header>
+<section id="trip" style="padding-left:0;padding-right:0"><div style="padding:30px 20px"><div class="tg"><div>
+<h2 id="t_ttl"></h2><p id="t_desc"></p><div class="cd" id="cd"></div><ul id="t_items"></ul></div>
+<img src="img/a9.jpg" alt="Rombongan PCC bersepeda 33 km"></div></div></section>
+<section id="news"><h2>Kabar terbaru</h2><div class="news" id="newsl"></div></section>
+<section id="gal"><h2>Galeri PCC</h2><div class="gal" id="gall"></div></section>
+<section id="about"><h2>Tentang PCC</h2><div class="tg"><div><p>Kami komunitas sepeda dari Pondok Kelapa, Jakarta Timur. Jersey hijau-merah-kuning dan biru-hijau kami sudah dikenal di jalanan, dari sepeda lipat sampai road bike klasik. Siapa pun boleh ikut, yang penting kompak dan sampai garis akhir bersama.</p>
+<div class="stats"><div><b>20</b>tahun</div><div><b>33,3 km</b>rute terakhir</div><div><b>12,9</b>km/jam santai</div></div></div><img src="img/a8.jpg" alt="Anggota PCC selfie" style="max-height:340px;object-fit:cover;border-radius:6px"></div></section>
+<footer><b>PCC – Pondok Kelapa Cycling Community</b><br>Tetap gowes, tetap kompak. 🚲</footer>
+<script>
+const D={trip:{date:"2026-10-31",title:"Gowes Ujung Genteng",desc:"Perayaan HUT ke-20 PCC. Kita berangkat bareng ke Ujung Genteng, Sukabumi: pantai, sawah, dan es kelapa menanti.",items:["Kumpul di titik start, helm dan lampu wajib","Bawa jas hujan, tabung air, dan ban dalam cadangan","Jaga formasi, tunggu yang di belakang","Foto bersama di garis pantai"]},
+news:[{t:"PCC genap 20 tahun",x:"Terima kasih untuk semua yang sudah mengayuh bersama selama dua dekade.",i:"img/a2.jpg",d:"2026-10-30"},{t:"Ban bocor? Santai.",x:"Tips dari lapangan: selalu bawa ban dalam cadangan dan pompa. Teman-teman PCC siap bantu.",i:"img/a3.jpg",d:"2026-10-10"}],
+gal:[["img/a9.jpg","Gerbang ROMA, 33,3 km"],["img/a1.jpg","Road bike klasik Ajeng"],["img/a2.jpg","Istirahat sambil jempol"],["img/a4.jpg","Mimpi gowes di London"],["img/a5.jpg","Mimpi gowes di Paris"],["img/a6.jpg","Mimpi gowes di New York"],["img/a7.jpg","Desain jersey PCC"],["img/a8.jpg","Selfie pagi"],["img/a3.jpg","Servis di jalan"]]};
+let C=D;const $=id=>document.getElementById(id),A=location.search.includes("admin=1");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function render(){const t=C.trip;$("t_ttl").textContent=t.title;$("t_desc").textContent=t.desc;
+$("t_items").innerHTML=t.items.map(i=>"<li>"+esc(i)+"</li>").join("");
+$("newsl").innerHTML=C.news.map((n,k)=>`<article class="post">${n.i?`<img src="${n.i}" alt="">`:""}<div><small>${esc(n.d||"")}</small><h3>${esc(n.t)}</h3><p>${esc(n.x)}</p>${A?`<button class="del" data-n="${k}">Hapus</button>`:""}</div></article>`).join("");
+$("gall").innerHTML=C.gal.map((g,k)=>`<figure><img src="${g[0]}" alt="${esc(g[1])}" loading="lazy"><figcaption>${esc(g[1])}${A?`<button class="del" data-g="${k}">Hapus</button>`:""}</figcaption></figure>`).join("")}
+function tick(){const ms=new Date(C.trip.date+"T05:00:00+07:00")-Date.now();if(ms<=0){$("cd").innerHTML="<div>Berangkat!</div>";return}
+const v=[[Math.floor(ms/864e5),"hari"],[Math.floor(ms/36e5)%24,"jam"],[Math.floor(ms/6e4)%60,"menit"]];
+$("cd").innerHTML=v.map(x=>`<div>${x[0]}<small>${x[1]}</small></div>`).join("")}
+addEventListener("scroll",()=>{const p=scrollY/(document.body.scrollHeight-innerHeight||1);$("bike").style.left=`calc(${p*100}% - ${p*24}px)`});
+async function load(){try{const r=await fetch("/api/content");if(r.ok){const d=await r.json();if(d)C=d}}catch(e){}
+if(C===D)try{const l=localStorage.getItem("pcc");if(l)C=JSON.parse(l)}catch(e){}render();tick();setInterval(tick,3e4)}
+const shrink=f=>new Promise(res=>{if(!f)return res("");const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1000/im.width),c=document.createElement("canvas");c.width=im.width*s;c.height=im.height*s;c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.75))};im.src=r.result};r.readAsDataURL(f)});
+if(A){$("adm").style.display="block";const t=C.trip;
+const fill=()=>{$("e_date").value=C.trip.date;$("e_ttl").value=C.trip.title;$("e_desc").value=C.trip.desc;$("e_items").value=C.trip.items.join("\n")};
+document.addEventListener("click",e=>{const b=e.target;if(b.dataset.n!==undefined){C.news.splice(+b.dataset.n,1);render()}if(b.dataset.g!==undefined){C.gal.splice(+b.dataset.g,1);render()}});
+$("save").onclick=async()=>{$("msg").textContent="Menyimpan…";
+C.trip={date:$("e_date").value||C.trip.date,title:$("e_ttl").value,desc:$("e_desc").value,items:$("e_items").value.split("\n").filter(Boolean)};
+if($("n_t").value){C.news.unshift({t:$("n_t").value,x:$("n_x").value,i:await shrink($("n_i").files[0]),d:new Date().toISOString().slice(0,10)});$("n_t").value=$("n_x").value=$("n_i").value=""}
+if($("g_i").files[0]){C.gal.unshift([await shrink($("g_i").files[0]),$("g_c").value||"PCC"]);$("g_i").value=$("g_c").value=""}
+let k=sessionStorage.pw||prompt("Password admin:");if(!k){$("msg").textContent="Dibatalkan";return}
+try{const r=await fetch("/api/content",{method:"POST",headers:{"x-admin-key":k,"content-type":"application/json"},body:JSON.stringify(C)});
+if(r.ok){sessionStorage.pw=k;$("msg").textContent="Tersimpan dan terbit ✔"}else{delete sessionStorage.pw;$("msg").textContent=r.status==401?"Password salah":"Server belum aktif"}}
+catch(e){$("msg").textContent="Server belum aktif"}
+try{localStorage.setItem("pcc",JSON.stringify(C))}catch(e){}render();tick()};
+load().then(fill)}else load();
+</script></body></html>
